@@ -6,8 +6,8 @@ import 'rc-slider/assets/index.css'
 
 const populationSize = (pow: number) => Math.pow(10, pow)
 
-function buildGetterAndSetter<T,U>(path: string[], obj: U, setObj: (updater: (v: U) => U) => void): [T, (v: T) => void] {
-  const lens = R.lensPath(path)
+function buildGetterAndSetter<T,U>(prop: string, obj: U, setObj: (updater: (v: U) => U) => void): [T, (v: T) => void] {
+  const lens = R.lensProp(prop)
   const value = R.view<any,T>(lens, obj)
   const setValue = (v: T) => setObj(R.set(lens, v)) 
   return [value, setValue]
@@ -17,6 +17,32 @@ const doesConvert = (rate: number) => {
   const dice = Math.random() * 100
   return dice < rate
 }
+
+interface Rates {
+  e1a: number;
+  e1b: number;
+  e2a: number;
+  e2b: number;
+}
+
+const doRun = (rates: Rates) => {
+  const e1Variation = Math.random() > 0.5 ? 'A' : 'B'
+  const e2Variation = Math.random() > 0.5 ? 'A' : 'B'
+
+  const e1ConversionRate = e1Variation === 'A' ? rates.e1a : rates.e1b
+  const e2ConversionRate = e2Variation === 'A' ? rates.e2a : rates.e2b
+      
+  const completedStep1 = doesConvert(e1ConversionRate)
+  const completedStep2 = completedStep1 && doesConvert(e2ConversionRate)
+
+  return {
+    variation: `${e1Variation}${e2Variation}`,
+    completedStep1,
+    completedStep2,
+  }
+}
+
+const doRuns = (count: number, rates: Rates) => R.times(() => doRun(rates), count)
 
 const aggregateRunsForVariation = (runs: Run[]) => {
   const count = R.length(runs)
@@ -50,47 +76,25 @@ interface Run {
 function App() {
   const [populationSizePower, setPopulationSizePower] = React.useState(2)
   const [variations, setVariations] = React.useState({
-    e1: {
-      a: {conversionRate: 50}, 
-      b: {conversionRate: 50},
-    },
-    e2: {
-      a: {conversionRate: 50}, 
-      b: {conversionRate: 50}, 
-    }
+    e1a: 50,
+    e1b: 50,
+    e2a: 50,
+    e2b: 50,
   })
 
-  const [e1aConversionRate, setE1aConversionRate] = buildGetterAndSetter<number, typeof variations>(['e1', 'a', 'conversionRate'], variations, setVariations)
-  const [e1bConversionRate, setE1bConversionRate] = buildGetterAndSetter<number, typeof variations>(['e1', 'b', 'conversionRate'], variations, setVariations)
-  const [e2aConversionRate, setE2aConversionRate] = buildGetterAndSetter<number, typeof variations>(['e2', 'a', 'conversionRate'], variations, setVariations)
-  const [e2bConversionRate, setE2bConversionRate] = buildGetterAndSetter<number, typeof variations>(['e2', 'b', 'conversionRate'], variations, setVariations)
+  const [e1aConversionRate, setE1aConversionRate] = buildGetterAndSetter<number, typeof variations>('e1a', variations, setVariations)
+  const [e1bConversionRate, setE1bConversionRate] = buildGetterAndSetter<number, typeof variations>('e1b', variations, setVariations)
+  const [e2aConversionRate, setE2aConversionRate] = buildGetterAndSetter<number, typeof variations>('e2a', variations, setVariations)
+  const [e2bConversionRate, setE2bConversionRate] = buildGetterAndSetter<number, typeof variations>('e2b', variations, setVariations)
 
   const [runs, setRuns] = React.useState<Run[]>([])
 
   const runExperiment = () => {
-    setRuns([])
-
-    R.times(() => {
-      const e1Variation = Math.random() > 0.5 ? 'A' : 'B'
-      const e2Variation = Math.random() > 0.5 ? 'A' : 'B'
-
-      const run = {
-        variation: `${e1Variation}${e2Variation}`,
-        completedStep1: false,
-        completedStep2: false,
-      }
-
-      const e1ConversionRate = e1Variation === 'A' ? e1aConversionRate : e1bConversionRate
-      const e2ConversionRate = e2Variation === 'A' ? e2aConversionRate : e2bConversionRate
-      
-      run.completedStep1 = doesConvert(e1ConversionRate)
-      run.completedStep2 = run.completedStep1 && doesConvert(e2ConversionRate)
-
-      setRuns(R.append<Run>(run))
-    }, populationSize(populationSizePower))
+    const count = populationSize(populationSizePower)
+    setRuns(doRuns(count, variations))
   }
 
-  const results = aggregateRuns(runs)
+  const results = React.useMemo(() => aggregateRuns(runs), [runs])
 
   return (
     <div className="App">
@@ -103,7 +107,7 @@ function App() {
 
         <div className="SetupForm-Control">
           <label>Population Size: {populationSize(populationSizePower)}</label>
-          <Slider min={0} max={9} value={populationSizePower} onChange={setPopulationSizePower} />
+          <Slider min={0} max={6} value={populationSizePower} onChange={setPopulationSizePower} />
         </div>
 
         <h4>Experiment 1</h4>
