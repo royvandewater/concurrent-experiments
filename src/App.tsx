@@ -13,16 +13,50 @@ function buildGetterAndSetter<T,U>(path: string[], obj: U, setObj: (updater: (v:
   return [value, setValue]
 }
 
+const doesConvert = (rate: number) => {
+  const dice = Math.random() * 100
+  return dice < rate
+}
+
+const aggregateRunsForVariation = (runs: Run[]) => {
+  const count = R.length(runs)
+  const numberCompletedStep1= R.length(R.filter(R.prop('completedStep1'), runs))
+  const numberCompletedStep2= R.length(R.filter(R.prop('completedStep2'), runs))
+
+  return {
+    count,
+    step1: {
+      numberCompleted: numberCompletedStep1,
+      percentageCompleted: Math.round(100 * numberCompletedStep1 / count),
+    },
+    step2: {
+      numberCompleted: numberCompletedStep2,
+      percentageCompleted: Math.round(100 * numberCompletedStep2 / count),
+    }
+  }
+}
+
+const aggregateRuns = (runs: Run[]) => {
+  const grouped = R.groupBy(R.prop('variation'), runs)
+  return R.mapObjIndexed(aggregateRunsForVariation, grouped)
+}
+
+interface Run {
+  variation: string;
+  completedStep1: boolean;
+  completedStep2: boolean;
+}
+
 function App() {
   const [populationSizePower, setPopulationSizePower] = React.useState(2)
   const [variations, setVariations] = React.useState({
     e1: {
-      a: {conversionRate: 50, numberOfSubjects: 0}, 
-      b: {conversionRate: 50, numberOfSubjects: 0},
+      a: {conversionRate: 50}, 
+      b: {conversionRate: 50},
     },
     e2: {
-      a: {conversionRate: 50, numberOfSubjects: 0}, 
-      b: {conversionRate: 50, numberOfSubjects: 0}, 
+      a: {conversionRate: 50}, 
+      b: {conversionRate: 50}, 
     }
   })
 
@@ -31,14 +65,32 @@ function App() {
   const [e2aConversionRate, setE2aConversionRate] = buildGetterAndSetter<number, typeof variations>(['e2', 'a', 'conversionRate'], variations, setVariations)
   const [e2bConversionRate, setE2bConversionRate] = buildGetterAndSetter<number, typeof variations>(['e2', 'b', 'conversionRate'], variations, setVariations)
 
-  // const e1aNumberOfSubjects = R.lensPath(['e1', 'a', 'numberOfSubjects'])
-  // const e1bNumberOfSubjects = R.lensPath(['e1', 'b', 'numberOfSubjects'])
-  // const e2aNumberOfSubjects = R.lensPath(['e2', 'a', 'numberOfSubjects'])
-  // const e2bNumberOfSubjects = R.lensPath(['e2', 'b', 'numberOfSubjects'])
+  const [runs, setRuns] = React.useState<Run[]>([])
 
-  // React.useEffect(() => {
+  const runExperiment = () => {
+    setRuns([])
 
-  // })
+    R.times(() => {
+      const e1Variation = Math.random() > 0.5 ? 'A' : 'B'
+      const e2Variation = Math.random() > 0.5 ? 'A' : 'B'
+
+      const run = {
+        variation: `${e1Variation}${e2Variation}`,
+        completedStep1: false,
+        completedStep2: false,
+      }
+
+      const e1ConversionRate = e1Variation === 'A' ? e1aConversionRate : e1bConversionRate
+      const e2ConversionRate = e2Variation === 'A' ? e2aConversionRate : e2bConversionRate
+      
+      run.completedStep1 = doesConvert(e1ConversionRate)
+      run.completedStep2 = run.completedStep1 && doesConvert(e2ConversionRate)
+
+      setRuns(R.append<Run>(run))
+    }, populationSize(populationSizePower))
+  }
+
+  const results = aggregateRuns(runs)
 
   return (
     <div className="App">
@@ -81,6 +133,10 @@ function App() {
           <label>Variation B Conversion Rate {e2bConversionRate}%</label>
           <Slider min={0} max={100} value={e2bConversionRate} onChange={setE2bConversionRate} />
         </div>
+
+        <div className="SetupForm-ButtonRow">
+          <button onClick={runExperiment}>Run</button>
+        </div>
       </section>
 
       <section className="Results">
@@ -99,35 +155,35 @@ function App() {
           <tbody>
             <tr>
               <th>AA</th>
-              <td>0</td>
-              <td>0</td>
-              <td>0%</td>
-              <td>0</td>
-              <td>0%</td>
+              <td>{R.pathOr(0, ['AA', 'count'], results)}</td>
+              <td>{R.pathOr(0, ['AA', 'step1', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['AA', 'step1', 'percentageCompleted'], results)}%</td>
+              <td>{R.pathOr(0, ['AA', 'step2', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['AA', 'step2', 'percentageCompleted'], results)}%</td>
             </tr>
             <tr>
               <th>AB</th>
-              <td>0</td>
-              <td>0</td>
-              <td>0%</td>
-              <td>0</td>
-              <td>0%</td>
+              <td>{R.pathOr(0, ['AB', 'count'], results)}</td>
+              <td>{R.pathOr(0, ['AB', 'step1', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['AB', 'step1', 'percentageCompleted'], results)}%</td>
+              <td>{R.pathOr(0, ['AB', 'step2', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['AB', 'step2', 'percentageCompleted'], results)}%</td>
             </tr>
             <tr>
               <th>BA</th>
-              <td>0</td>
-              <td>0</td>
-              <td>0%</td>
-              <td>0</td>
-              <td>0%</td>
+              <td>{R.pathOr(0, ['BA', 'count'], results)}</td>
+              <td>{R.pathOr(0, ['BA', 'step1', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['BA', 'step1', 'percentageCompleted'], results)}%</td>
+              <td>{R.pathOr(0, ['BA', 'step2', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['BA', 'step2', 'percentageCompleted'], results)}%</td>
             </tr>
             <tr>
               <th>BB</th>
-              <td>0</td>
-              <td>0</td>
-              <td>0%</td>
-              <td>0</td>
-              <td>0%</td>
+              <td>{R.pathOr(0, ['BB', 'count'], results)}</td>
+              <td>{R.pathOr(0, ['BB', 'step1', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['BB', 'step1', 'percentageCompleted'], results)}%</td>
+              <td>{R.pathOr(0, ['BB', 'step2', 'numberCompleted'], results)}</td>
+              <td>{R.pathOr(0, ['BB', 'step2', 'percentageCompleted'], results)}%</td>
             </tr>
           </tbody>
         </table>

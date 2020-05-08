@@ -9,6 +9,26 @@
   margin-top: 16px;
 }
 
+.SetupForm-ButtonRow {
+  margin-top: 16px;
+  display: flex;
+}
+
+.SetupForm-ButtonRow button {
+  flex: 1;
+  height: 50px;
+  font-size: 24px;
+  background: #007acc;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-weight: bold;
+}
+
+.SetupForm-ButtonRow button:hover {
+  background: #3393d3;
+}
+
 .Results table {
   border-spacing: 0;
   border-collapse: collapse;
