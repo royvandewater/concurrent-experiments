@@ -39,10 +39,12 @@ interface Results {
   BB: Result;
 }
 
-const calculateProgress = (results: Results | undefined) => {
-  if (results === undefined) return
+const calculateProgress = (count: number, results: Results | undefined) => {
+  if (results === undefined) return 0
 
-  return results.AA.count + results.AB.count + results.BA.count + results.BB.count
+  const total = results.AA.count + results.AB.count + results.BA.count + results.BB.count
+
+  return Math.round(100 * total / count)
 }
 
 function App() {
@@ -61,16 +63,21 @@ function App() {
 
   const [results, setResults] = React.useState<Results | undefined>(undefined)
 
+  React.useEffect(() => setResults(undefined), [rates, populationSizePower])
+
   const worker = React.useMemo(() => {
     const w = new Worker(`${process.env.PUBLIC_URL}/experiment-worker.js`)
     w.onmessage = (e) => setResults(e.data)
     return w
   }, [])
 
+  const count = populationSize(populationSizePower)
+
   const runExperiment = () => {
-    const count = populationSize(populationSizePower)
     worker.postMessage({count, rates})
   }
+
+  const progress = calculateProgress(count, results)
 
   return (
     <div className="App">
@@ -82,7 +89,7 @@ function App() {
         <h2>Setup</h2>
 
         <div className="SetupForm-Control">
-          <label>Population Size: {populationSize(populationSizePower)}</label>
+          <label>Population Size: {count}</label>
           <Slider min={0} max={6} value={populationSizePower} onChange={setPopulationSizePower} />
         </div>
 
@@ -118,10 +125,12 @@ function App() {
           <button onClick={runExperiment}>Run</button>
         </div>
 
+        {0 < progress && progress < 100 &&
         <div className="SetupForm-Control">
           <label>Progress</label>
-          <Slider min={0} max={populationSize(populationSizePower)} value={calculateProgress(results)} disabled />
+          <Slider min={0} max={100} value={progress} disabled />
         </div>
+        }
       </section>
 
       <section className="Results">
