@@ -13,11 +13,6 @@ function buildGetterAndSetter<T,U>(prop: string, obj: U, setObj: (updater: (v: U
   return [value, setValue]
 }
 
-const doesConvert = (rate: number) => {
-  const dice = Math.random() * 100
-  return dice < rate
-}
-
 interface Rates {
   e1a: number;
   e1b: number;
@@ -25,76 +20,57 @@ interface Rates {
   e2b: number;
 }
 
-const doRun = (rates: Rates) => {
-  const e1Variation = Math.random() > 0.5 ? 'A' : 'B'
-  const e2Variation = Math.random() > 0.5 ? 'A' : 'B'
-
-  const e1ConversionRate = e1Variation === 'A' ? rates.e1a : rates.e1b
-  const e2ConversionRate = e2Variation === 'A' ? rates.e2a : rates.e2b
-      
-  const completedStep1 = doesConvert(e1ConversionRate)
-  const completedStep2 = completedStep1 && doesConvert(e2ConversionRate)
-
-  return {
-    variation: `${e1Variation}${e2Variation}`,
-    completedStep1,
-    completedStep2,
+interface Result {
+  count: number;
+  step1: {
+    numberCompleted: number;
+    percentageCompleted: number;
+  }
+  step2: {
+    numberCompleted: number;
+    percentageCompleted: number;
   }
 }
 
-const doRuns = (count: number, rates: Rates) => R.times(() => doRun(rates), count)
-
-const aggregateRunsForVariation = (runs: Run[]) => {
-  const count = R.length(runs)
-  const numberCompletedStep1= R.length(R.filter(R.prop('completedStep1'), runs))
-  const numberCompletedStep2= R.length(R.filter(R.prop('completedStep2'), runs))
-
-  return {
-    count,
-    step1: {
-      numberCompleted: numberCompletedStep1,
-      percentageCompleted: Math.round(100 * numberCompletedStep1 / count),
-    },
-    step2: {
-      numberCompleted: numberCompletedStep2,
-      percentageCompleted: Math.round(100 * numberCompletedStep2 / count),
-    }
-  }
+interface Results {
+  AA: Result;
+  AB: Result;
+  BA: Result;
+  BB: Result;
 }
 
-const aggregateRuns = (runs: Run[]) => {
-  const grouped = R.groupBy(R.prop('variation'), runs)
-  return R.mapObjIndexed(aggregateRunsForVariation, grouped)
-}
+const calculateProgress = (results: Results | undefined) => {
+  if (results === undefined) return
 
-interface Run {
-  variation: string;
-  completedStep1: boolean;
-  completedStep2: boolean;
+  return results.AA.count + results.AB.count + results.BA.count + results.BB.count
 }
 
 function App() {
   const [populationSizePower, setPopulationSizePower] = React.useState(2)
-  const [variations, setVariations] = React.useState({
+  const [rates, setRates] = React.useState<Rates>({
     e1a: 50,
     e1b: 50,
     e2a: 50,
     e2b: 50,
   })
 
-  const [e1aConversionRate, setE1aConversionRate] = buildGetterAndSetter<number, typeof variations>('e1a', variations, setVariations)
-  const [e1bConversionRate, setE1bConversionRate] = buildGetterAndSetter<number, typeof variations>('e1b', variations, setVariations)
-  const [e2aConversionRate, setE2aConversionRate] = buildGetterAndSetter<number, typeof variations>('e2a', variations, setVariations)
-  const [e2bConversionRate, setE2bConversionRate] = buildGetterAndSetter<number, typeof variations>('e2b', variations, setVariations)
+  const [e1aConversionRate, setE1aConversionRate] = buildGetterAndSetter<number, typeof rates>('e1a', rates, setRates)
+  const [e1bConversionRate, setE1bConversionRate] = buildGetterAndSetter<number, typeof rates>('e1b', rates, setRates)
+  const [e2aConversionRate, setE2aConversionRate] = buildGetterAndSetter<number, typeof rates>('e2a', rates, setRates)
+  const [e2bConversionRate, setE2bConversionRate] = buildGetterAndSetter<number, typeof rates>('e2b', rates, setRates)
 
-  const [runs, setRuns] = React.useState<Run[]>([])
+  const [results, setResults] = React.useState<Results | undefined>(undefined)
+
+  const worker = React.useMemo(() => {
+    const w = new Worker(`${process.env.PUBLIC_URL}/experiment-worker.js`)
+    w.onmessage = (e) => setResults(e.data)
+    return w
+  }, [])
 
   const runExperiment = () => {
     const count = populationSize(populationSizePower)
-    setRuns(doRuns(count, variations))
+    worker.postMessage({count, rates})
   }
-
-  const results = React.useMemo(() => aggregateRuns(runs), [runs])
 
   return (
     <div className="App">
@@ -140,6 +116,11 @@ function App() {
 
         <div className="SetupForm-ButtonRow">
           <button onClick={runExperiment}>Run</button>
+        </div>
+
+        <div className="SetupForm-Control">
+          <label>Progress</label>
+          <Slider min={0} max={populationSize(populationSizePower)} value={calculateProgress(results)} disabled />
         </div>
       </section>
 
