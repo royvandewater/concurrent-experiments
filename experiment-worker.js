@@ -62,14 +62,31 @@ const aggregateRuns = (runs) => {
 onmessage = (e) => {
   const {count, rates} = e.data
 
-  const runs = []
-  var i = 0
-
-  for (var i = 0; i < count; i++) {
-    runs.push(doRun(rates))
-
-    if (i % 1000 === 0) postMessage(aggregateRuns(runs))
+  const aggregates = {
+    AA: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
+    AB: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
+    BA: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
+    BB: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
   }
 
-  postMessage(aggregateRuns(runs))
+  for (var i = 0; i < count; i++) {
+    const run = doRun(rates)
+    const aggregate = aggregates[run.variation]
+
+    aggregate.count += 1
+
+    if (run.completedStep1) {
+      aggregate.step1.numberCompleted += 1
+      aggregate.step1.percentageCompleted = Math.round(100 * aggregate.step1.numberCompleted / aggregate.count)
+    }
+
+    if (run.completedStep2) {
+      aggregate.step2.numberCompleted += 1
+      aggregate.step2.percentageCompleted = Math.round(100 * aggregate.step2.numberCompleted / aggregate.count)
+    }
+
+    if (i % 1000 === 0) postMessage(aggregates)
+  }
+
+  postMessage(aggregates)
 }
