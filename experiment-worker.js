@@ -20,47 +20,9 @@ const doRun = (rates) => {
   }
 }
 
-const aggregateRunsForVariation = (runs=[]) => {
-  const count = runs.length
-  const numberCompletedStep1 = runs.filter(r => r.completedStep1).length
-  const numberCompletedStep2 = runs.filter(r => r.completedStep2).length
-
-  return {
-    count,
-    step1: {
-      numberCompleted: numberCompletedStep1,
-      percentageCompleted: Math.round(100 * numberCompletedStep1 / count),
-    },
-    step2: {
-      numberCompleted: numberCompletedStep2,
-      percentageCompleted: Math.round(100 * numberCompletedStep2 / count),
-    }
-  }
-}
-
-const groupBy = (objectArray, property) => {
-  return objectArray.reduce(function (acc, obj) {
-    let key = obj[property]
-    if (!acc[key]) {
-      acc[key] = []
-    }
-    acc[key].push(obj)
-    return acc
-  }, {})
-}
-
-const aggregateRuns = (runs) => {
-  const grouped = groupBy(runs, 'variation')
-  return {
-    AA: aggregateRunsForVariation(grouped.AA),
-    AB: aggregateRunsForVariation(grouped.AB),
-    BA: aggregateRunsForVariation(grouped.BA),
-    BB: aggregateRunsForVariation(grouped.BB),
-  }
-}
-
 onmessage = (e) => {
   const {count, rates} = e.data
+  console.log('worker.onmessage', {count, rates})
 
   const aggregates = {
     AA: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
