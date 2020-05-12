@@ -90,7 +90,7 @@ function App() {
 
         <div className="SetupForm-Control">
           <label>Population Size: {count}</label>
-          <Slider min={0} max={6} value={populationSizePower} onChange={setPopulationSizePower} />
+          <Slider min={0} max={7} value={populationSizePower} onChange={setPopulationSizePower} />
         </div>
 
         <h4>Experiment 1</h4>
@@ -184,7 +184,7 @@ function App() {
 
         <dl className="Footnotes">
           <dt>*</dt>
-          <dd>This is measured as the percentage of users that completed Step 1 that also completed Step 2 because Step 1 is a prerequisite to get to Step 2.</dd>
+          <dd>This is measured as the percentage of users that completed Step 1 that also completed Step 2.</dd>
         </dl>
       </section>
     </div>
