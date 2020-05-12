@@ -56,10 +56,7 @@ function App() {
 
   const worker = React.useMemo(() => {
     const w = new Worker(`${process.env.PUBLIC_URL}/experiment-worker.js`)
-    w.onmessage = (e) => {
-      console.log('app.onmessage', e.data)
-      setResults(e.data)
-    }
+    w.onmessage = (e) => setResults(e.data)
     return w
   }, [])
 

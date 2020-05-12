@@ -22,7 +22,6 @@ const doRun = (rates) => {
 
 onmessage = (e) => {
   const {count, rates} = e.data
-  console.log('worker.onmessage', {count, rates})
 
   const aggregates = {
     AA: {count: 0, step1: {numberCompleted: 0, percentageCompleted: 0}, step2: {numberCompleted: 0, percentageCompleted: 0} },
