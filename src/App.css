@@ -18,15 +18,26 @@
   flex: 1;
   height: 50px;
   font-size: 24px;
-  background: #007acc;
   border: none;
   border-radius: 2px;
   color: white;
   font-weight: bold;
 }
 
-.SetupForm-ButtonRow button:hover {
+.SetupForm-ButtonRow button.button-primary {
+  background: #007acc;
+}
+
+.SetupForm-ButtonRow button.button-primary:hover {
   background: #3393d3;
+}
+
+.SetupForm-ButtonRow button.button-danger {
+  background: #eb1d0f;
+}
+
+.SetupForm-ButtonRow button.button-danger:hover {
+  background: #f63a2d;
 }
 
 .Results table {
