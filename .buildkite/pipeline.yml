@@ -1,6 +1,10 @@
 # For BuildKite
 steps:
-  - command: "nvm use 12.10.1 && yarn install && yarn run build"
+  - command: "yarn install && yarn run build"
     label: "Build"
+    plugins:
+      - docker#v3.2.0:
+          image: "node:12.10.1-alpine"
+          workdir: /app
 
 
