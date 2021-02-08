@@ -1,7 +1,5 @@
 # For BuildKite
 steps:
-  - command: "pwd && sleep 60"
-
   - command: "nvm use 12.10.1 && yarn install && yarn run build"
     label: "Build"
 
