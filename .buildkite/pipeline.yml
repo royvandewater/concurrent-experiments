@@ -3,7 +3,7 @@ steps:
   - command: "yarn install && yarn run build"
     label: "Build"
     plugins:
-      - docker#v3.2.0:
+      - docker#v3.14.0:
           image: "node:12.20.1-alpine"
           workdir: /app
 
