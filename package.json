@@ -11,7 +11,7 @@
     "@types/react": "16.14.30",
     "@types/react-dom": "16.9.8",
     "ramda": "0.27.0",
-    "rc-slider": "9.2.4",
+    "rc-slider": "9.7.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1",
@@ -40,6 +40,6 @@
   },
   "devDependencies": {
     "@types/ramda": "0.27.6",
-    "@types/rc-slider": "8.6.6"
+    "@types/rc-slider": "9.3.0"
   }
 }
