@@ -1,9 +1,9 @@
 import React from 'react'
 import * as R from 'ramda'
-import Slider from 'rc-slider'
 import './App.css'
 import 'rc-slider/assets/index.css'
 import useQuery from './useQuery'
+import { CustomSlider } from './CustomSlider'
 
 const populationSize = (pow: number) => Math.pow(10, pow)
 
@@ -42,7 +42,7 @@ const calculateProgress = (count: number, results: Results | undefined) => {
 }
 
 function App() {
-  const {    
+  const {
     populationSizePower, setPopulationSizePower,
     e1a, setE1a,
     e1b, setE1b,
@@ -77,7 +77,7 @@ function App() {
 
         <div className="SetupForm-Control">
           <label>Population Size: {count}</label>
-          <Slider min={0} max={7} value={populationSizePower} onChange={setPopulationSizePower} />
+          <CustomSlider min={0} max={7} value={populationSizePower} onChange={setPopulationSizePower} />
         </div>
 
         <h4>Experiment 1</h4>
@@ -86,12 +86,12 @@ function App() {
 
         <div className="SetupForm-Control">
           <label>Variation A Conversion Rate {e1a}%</label>
-          <Slider min={0} max={100} value={e1a} onChange={setE1a} />
+          <CustomSlider min={0} max={100} value={e1a} onChange={setE1a} />
         </div>
 
         <div className="SetupForm-Control">
           <label>Variation B Conversion Rate {e1b}%</label>
-          <Slider min={0} max={100} value={e1b} onChange={setE1b} />
+          <CustomSlider min={0} max={100} value={e1b} onChange={setE1b} />
         </div>
 
         <h4>Experiment 2</h4>
@@ -100,16 +100,16 @@ function App() {
 
         <div className="SetupForm-Control">
           <label>Variation A Conversion Rate {e2a}%</label>
-          <Slider min={0} max={100} value={e2a} onChange={setE2a} />
+          <CustomSlider min={0} max={100} value={e2a} onChange={setE2a} />
         </div>
 
         <div className="SetupForm-Control">
           <label>Variation B Conversion Rate {e2b}%</label>
-          <Slider min={0} max={100} value={e2b} onChange={setE2b} />
+          <CustomSlider min={0} max={100} value={e2b} onChange={setE2b} />
         </div>
 
         <div className="SetupForm-ButtonRow">
-          {progress > 0 
+          {progress > 0
             ? <button onClick={clearResults} className="button-danger">Clear</button>
             : <button onClick={runExperiment} className="button-primary">Run</button>
           }
@@ -118,7 +118,7 @@ function App() {
         {0 < progress && progress < 100 &&
         <div className="SetupForm-Control">
           <label>Progress</label>
-          <Slider min={0} max={100} value={progress} disabled />
+          <CustomSlider min={0} max={100} value={progress} disabled />
         </div>
         }
       </section>
