@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "@types/ramda": "0.29.8",
+    "@types/ramda": "0.29.9",
     "@types/rc-slider": "9.3.0"
   }
 }
