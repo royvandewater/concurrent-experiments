@@ -2298,10 +2298,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/rc-slider@9.3.0":
-  version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@types/rc-slider/-/rc-slider-9.3.0.tgz#e1ca076aecc49ca76975fa811d3a7bd84113f51b"
-  integrity sha512-ytjaiWUkhlRUFg70CgDaMnXIeg3LB1ISgmFtIki9uhwtQ2x87+Jg6bGtn0J2A0wxHA5Vf+poU1/3qBltSy0ieg==
+"@types/rc-slider@9.3.1":
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/@types/rc-slider/-/rc-slider-9.3.1.tgz#ed0a11a87fdb3064b2767705c7bd94b62a112725"
+  integrity sha512-apvhMnpQltIzLIvKfZGeI5uvBK4CoDAnqXlV7rtFRVn4Ecwe5Db32I4LF1sNlhAVevLjLJuE+7Fpi3OnG1mVbg==
   dependencies:
     rc-slider "*"
 
