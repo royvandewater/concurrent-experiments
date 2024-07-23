@@ -7856,10 +7856,10 @@ rc-slider@*:
     rc-util "^5.18.1"
     shallowequal "^1.1.0"
 
-rc-slider@11.1.0:
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-11.1.0.tgz#9d5622f574eaea4a8674433cd19db020c976abb9"
-  integrity sha512-tha9VMVZy1IGSiwl9w0pxrFjGLbOLTUu0XrPInYz9kpyU+kTSKSYA4NzKchu+G/PCr/e2SwGqAj8rCYPnwm0Dg==
+rc-slider@11.1.1:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-11.1.1.tgz#7bedbf315adb00d44a8102c0e7d64af3e3924f20"
+  integrity sha512-6qox0l/QIXXTVa58JZr+KGMz1IVCIpGhkNjpmjCbpAhbIILyJAI35DevelC+rdHfzTHyd34jDz38wGZBpuxq2Q==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.5"
