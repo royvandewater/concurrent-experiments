@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "live-server",
+    "dev": "browser-sync start --config bs-config.js",
     "test": "vitest"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/preact": "3.2.4",
+    "browser-sync": "^3.0.3",
     "happy-dom": "^15.11.7",
     "htm": "3.1.1",
     "jest-dom": "^4.0.0",
     "jsdom": "^25.0.1",
     "jsdom-worker": "^0.3.0",
-    "live-server": "^1.2.2",
     "node-fetch": "^3.3.2",
     "preact": "10.25.3",
     "ramda": "0.30.1",
