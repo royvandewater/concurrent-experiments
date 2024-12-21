@@ -2,9 +2,6 @@
   "name": "concurrent-experiments",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "rc-slider": "11.1.7"
-  },
   "scripts": {
     "dev": "live-server"
   },
