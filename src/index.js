@@ -3,7 +3,10 @@ import { html } from "htm/preact";
 
 import { App } from "./App.js";
 
-render(html`<${App} />`, document.getElementById("app"));
+render(
+  html`<${App} workerUrl="./src/experiment-worker.js" />`,
+  document.getElementById("app")
+);
 
 // import "./index.css";
 // import App from "./App";

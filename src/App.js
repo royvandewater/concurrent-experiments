@@ -4,9 +4,7 @@ import useQuery from "./useQuery.js";
 import { CustomSlider } from "./CustomSlider.js";
 import { useMemo, useState } from "preact/hooks";
 
-const baseUrl = window.location.origin;
-
-export const App = () => {
+export const App = ({ workerUrl }) => {
   const {
     populationSizePower,
     setPopulationSizePower,
@@ -27,7 +25,7 @@ export const App = () => {
   const [results, setResults] = useState(undefined);
 
   const worker = useMemo(() => {
-    const w = new Worker(`${baseUrl}/src/experiment-worker.js`);
+    const w = new Worker(workerUrl);
     w.onmessage = (e) => setResults(e.data);
     return w;
   }, []);
