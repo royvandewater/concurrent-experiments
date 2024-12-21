@@ -3,14 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "live-server"
+    "dev": "live-server",
+    "test": "vitest"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.1.0",
-    "@testing-library/user-event": "14.5.2",
-    "@types/jest": "29.5.14",
-    "live-server": "^1.2.2"
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/preact": "3.2.4",
+    "happy-dom": "^15.11.7",
+    "htm": "3.1.1",
+    "jest-dom": "^4.0.0",
+    "jsdom": "^25.0.1",
+    "jsdom-worker": "^0.3.0",
+    "live-server": "^1.2.2",
+    "node-fetch": "^3.3.2",
+    "preact": "10.25.3",
+    "ramda": "0.30.1",
+    "vitest": "^2.1.8"
   },
   "packageManager": "yarn@3.5.1+sha512.8cd0e31bd60779ef4ca92b855fb3462c7ec35ce8b345752b7349a68239776417f46d41d79c8047242d9c93b48a1516f64c7444ebe747d9a02bf26868e6fa1f2b"
 }

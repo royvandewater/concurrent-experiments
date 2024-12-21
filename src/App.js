@@ -4,61 +4,7 @@ import useQuery from "./useQuery.js";
 import { CustomSlider } from "./CustomSlider.js";
 import { useMemo, useState } from "preact/hooks";
 
-/**
- * @param {number} pow
- * @returns {number}
- */
-const populationSize = (pow) => Math.pow(10, pow);
-
-/**
- * @typedef {Object} Rates
- * @property {number} e1a
- * @property {number} e1b
- * @property {number} e2a
- * @property {number} e2b
- */
-
-/**
- * @typedef {Object} Result
- * @property {number} count
- * @property {Object} step1
- * @property {number} step1.numberCompleted
- * @property {number} step1.percentageCompleted
- * @property {Object} step2
- * @property {number} step2.numberCompleted
- * @property {number} step2.percentageCompleted
- */
-
-/**
- * @typedef {Object} Results
- * @property {Result} AA
- * @property {Result} AB
- * @property {Result} BA
- * @property {Result} BB
- */
-
-/**
- * @typedef {Object} Results
- * @property {Result} AA
- * @property {Result} AB
- * @property {Result} BA
- * @property {Result} BB
- */
-
-/**
- *
- * @param {number} count
- * @param {Results | undefined} results
- * @returns
- */
-const calculateProgress = (count, results) => {
-  if (results === undefined) return 0;
-
-  const total =
-    results.AA.count + results.AB.count + results.BA.count + results.BB.count;
-
-  return Math.ceil((100 * total) / count);
-};
+const baseUrl = window.location.origin;
 
 export const App = () => {
   const {
@@ -81,7 +27,7 @@ export const App = () => {
   const [results, setResults] = useState(undefined);
 
   const worker = useMemo(() => {
-    const w = new Worker("./src/experiment-worker.js");
+    const w = new Worker(`${baseUrl}/src/experiment-worker.js`);
     w.onmessage = (e) => setResults(e.data);
     return w;
   }, []);
@@ -260,4 +206,60 @@ export const App = () => {
       </section>
     </div>
   `;
+};
+
+/**
+ * @param {number} pow
+ * @returns {number}
+ */
+const populationSize = (pow) => Math.pow(10, pow);
+
+/**
+ * @typedef {Object} Rates
+ * @property {number} e1a
+ * @property {number} e1b
+ * @property {number} e2a
+ * @property {number} e2b
+ */
+
+/**
+ * @typedef {Object} Result
+ * @property {number} count
+ * @property {Object} step1
+ * @property {number} step1.numberCompleted
+ * @property {number} step1.percentageCompleted
+ * @property {Object} step2
+ * @property {number} step2.numberCompleted
+ * @property {number} step2.percentageCompleted
+ */
+
+/**
+ * @typedef {Object} Results
+ * @property {Result} AA
+ * @property {Result} AB
+ * @property {Result} BA
+ * @property {Result} BB
+ */
+
+/**
+ * @typedef {Object} Results
+ * @property {Result} AA
+ * @property {Result} AB
+ * @property {Result} BA
+ * @property {Result} BB
+ */
+
+/**
+ *
+ * @param {number} count
+ * @param {Results | undefined} results
+ * @returns
+ */
+const calculateProgress = (count, results) => {
+  if (results === undefined) return 0;
+
+  const total =
+    results.AA.count + results.AB.count + results.BA.count + results.BB.count;
+
+  return Math.ceil((100 * total) / count);
 };
