@@ -1032,7 +1032,6 @@ __metadata:
     browser-sync: "npm:^3.0.3"
     happy-dom: "npm:^15.11.7"
     htm: "npm:3.1.1"
-    jest-dom: "npm:^4.0.0"
     jsdom: "npm:^25.0.1"
     jsdom-worker: "npm:^0.3.0"
     node-fetch: "npm:^3.3.2"
@@ -2237,13 +2236,6 @@ __metadata:
     "@pkgjs/parseargs":
       optional: true
   checksum: 10c0/6acc10d139eaefdbe04d2f679e6191b3abf073f111edf10b1de5302c97ec93fffeb2fdd8681ed17f16268aa9dd4f8c588ed9d1d3bffbbfa6e8bf897cbb3149b9
-  languageName: node
-  linkType: hard
-
-"jest-dom@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "jest-dom@npm:4.0.0"
-  checksum: 10c0/2914e1c216f905ed2596f057480696580ad4007167d436f2f51c167cd3dd301df3e1caf70777769339fa4628e9e4fe04f3c6c6d6e35a51b36a526a55e163c796
   languageName: node
   linkType: hard
 
