@@ -1030,7 +1030,6 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.6.3"
     "@testing-library/preact": "npm:3.2.4"
     browser-sync: "npm:^3.0.3"
-    happy-dom: "npm:^16.0.0"
     htm: "npm:3.1.1"
     jsdom: "npm:^25.0.1"
     jsdom-worker: "npm:^0.3.0"
@@ -1788,16 +1787,6 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
-  languageName: node
-  linkType: hard
-
-"happy-dom@npm:^16.0.0":
-  version: 16.2.6
-  resolution: "happy-dom@npm:16.2.6"
-  dependencies:
-    webidl-conversions: "npm:^7.0.0"
-    whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10c0/3f35236d76625ab391bc6e59dcd5fe08cd9ba660ec5bb95a39426e77e962cd93e1e789a105b1f9ecbe2f8182155f7a79b40e3da0c12af0cae6a48fb81b1d86be
   languageName: node
   linkType: hard
 
@@ -3822,13 +3811,6 @@ __metadata:
   dependencies:
     iconv-lite: "npm:0.6.3"
   checksum: 10c0/273b5f441c2f7fda3368a496c3009edbaa5e43b71b09728f90425e7f487e5cef9eb2b846a31bd760dd8077739c26faf6b5ca43a5f24033172b003b72cf61a93e
-  languageName: node
-  linkType: hard
-
-"whatwg-mimetype@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "whatwg-mimetype@npm:3.0.0"
-  checksum: 10c0/323895a1cda29a5fb0b9ca82831d2c316309fede0365047c4c323073e3239067a304a09a1f4b123b9532641ab604203f33a1403b5ca6a62ef405bcd7a204080f
   languageName: node
   linkType: hard
 
