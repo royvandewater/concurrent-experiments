@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "htm": "3.1.1",
-    "preact": "10.28.3",
+    "preact": "10.28.4",
     "ramda": "0.32.0"
   },
   "devDependencies": {
