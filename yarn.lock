@@ -1033,7 +1033,7 @@ __metadata:
     jsdom: "npm:^29.0.0"
     jsdom-worker: "npm:^0.3.0"
     node-fetch: "npm:^3.3.2"
-    preact: "npm:10.29.1"
+    preact: "npm:10.29.2"
     ramda: "npm:0.32.0"
     vitest: "npm:^4.0.0"
   languageName: unknown
@@ -2878,10 +2878,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:10.29.1":
-  version: 10.29.1
-  resolution: "preact@npm:10.29.1"
-  checksum: 10c0/55da3994d0d9ebcc26476552c6571f8be1150cccdafe842aad40eff9abc84c867555f6d01db386fc63ac4cbe9f9da245002468bb24df0642365162d8f1b545e2
+"preact@npm:10.29.2":
+  version: 10.29.2
+  resolution: "preact@npm:10.29.2"
+  checksum: 10c0/2ee161274e475804524608d42bba8c79920636b322293248796a9e5bf4c3332336f8c0eca1b1566ed09cdee95e408eb20b5b7613d95820ea6b6eb8fc090ef60a
   languageName: node
   linkType: hard
 
