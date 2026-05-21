@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "htm": "3.1.1",
-    "preact": "10.29.2",
+    "preact": "10.29.1",
     "ramda": "0.32.0"
   },
   "devDependencies": {
@@ -18,7 +18,7 @@
     "jsdom": "^29.0.0",
     "jsdom-worker": "^0.3.0",
     "node-fetch": "^3.3.2",
-    "vitest": "^4.0.0"
+    "vitest": "4.1.5"
   },
-  "packageManager": "yarn@4.15.0+sha512.07ec708ac11e2eaa4ea2b04cfbb272812f7e74a753f1595eaef4486c663a98306a30cca3e6fc40f7a0b168dcfb3a2490b6a5e0501e20fb69cc36f563dd161c53"
+  "packageManager": "pnpm@11.2.2+sha512.36e6621fad506178936455e70247b8808ef4ec25797a9f437a93281a020484e2607f6a469a22e982987c3dbb8866e3071514ab10a4a1749e06edcd1ec118436f"
 }
