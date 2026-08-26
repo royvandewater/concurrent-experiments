@@ -12,8 +12,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       preact:
-        specifier: 10.29.1
-        version: 10.29.1
+        specifier: 10.29.8
+        version: 10.29.8
       ramda:
         specifier: 0.32.0
         version: 0.32.0
@@ -23,7 +23,7 @@ importers:
         version: 6.9.1
       '@testing-library/preact':
         specifier: 3.2.4
-        version: 3.2.4(preact@10.29.1)
+        version: 3.2.4(preact@10.29.8)
       browser-sync:
         specifier: ^3.0.3
         version: 3.0.4
@@ -1096,8 +1096,13 @@ packages:
     resolution: {integrity: sha512-SoSL4+OSEtR99LHFZQiJLkT59C5B1amGO1NzTwj7TT1qCUgUO6hxOvzkOYxD+vMrXBM3XJIKzokoERdqQq/Zmg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.29.1:
-    resolution: {integrity: sha512-gQCLc/vWroE8lIpleXtdJhTFDogTdZG9AjMUpVkDf2iTCNwYNWA+u16dL41TqUDJO4gm2IgrcMv3uTpjd4Pwmg==}
+  preact@10.29.8:
+    resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
+    peerDependencies:
+      preact-render-to-string: '>=5'
+    peerDependenciesMeta:
+      preact-render-to-string:
+        optional: true
 
   pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
@@ -1674,10 +1679,10 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/preact@3.2.4(preact@10.29.1)':
+  '@testing-library/preact@3.2.4(preact@10.29.8)':
     dependencies:
       '@testing-library/dom': 8.20.1
-      preact: 10.29.1
+      preact: 10.29.8
 
   '@tybys/wasm-util@0.10.2':
     dependencies:
@@ -2546,7 +2551,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  preact@10.29.1: {}
+  preact@10.29.8: {}
 
   pretty-format@27.5.1:
     dependencies:
